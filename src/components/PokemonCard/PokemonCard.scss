@@ -1,0 +1,47 @@
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: white;
+  border: 2px solid #565757;
+  border-radius: 20px;
+  margin: 20px;
+  transition: 0.5s;
+
+  &:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  .forClick {
+    width: 144px;
+    height: 150px;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .image-block {
+    display: flex;
+
+    .pokemon-image {
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+    }
+
+    .favorite-image, .favorite-image-active {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      margin-top: 10px;
+      margin-left: -10px;
+    }
+  }
+
+  &-name {
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
+}
