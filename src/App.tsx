@@ -8,10 +8,11 @@ import { getAuthorization } from './api';
 
 import AllPokemons from "./pages/AllPokemons/AllPokemons";
 import SelectedPokemon from "./pages/SelectedPokemon/SelectedPokemon";
-
-import './App.scss';
 import Header from "./components/Header/Header";
 import ModalWindowAuthorization from "./components/ModalAuthWindow/ModalAuthWindow";
+import Favorites from "./pages/Favorites/Favorites";
+
+import './App.scss';
 
 const App = () => {
   let history = useNavigate();
@@ -22,7 +23,7 @@ const App = () => {
   const Authorization = async () => {
     const auth: any = await getAuthorization();
     console.log(auth);
-    
+
     if (auth.success) {
       dispatch(setIsAuthorized(auth.success));
       dispatch(setFavorites(auth.favorites));
@@ -42,7 +43,11 @@ const App = () => {
       <Routes>
         <Route path='/allPokemons' element={<AllPokemons />} />
         <Route path='/pokemons/:pokemon' element={<SelectedPokemon />} />
-       
+        <Route path='/favorites' element={<Favorites />} />
+        <Route
+          path="*"
+          element={<Navigate to="/allPokemons/?page=1&amount=10" replace />}
+        />
       </Routes>
       <div className="modal-block">
         <ModalWindowAuthorization />

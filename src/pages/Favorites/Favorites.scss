@@ -1,32 +1,4 @@
-.auth-button-block {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 70px;
-
-    .auth-button {
-        cursor: pointer;
-        height: 40px;
-        background-color: white;
-        border: 2px solid #565757;
-        border-radius: 7px;
-        margin-right: 20px;
-        font-size: 14px;
-        font-weight: 500;
-    }
-}
-
-
-.header {
-    display: flex;
-    justify-content: center;
-
-    .pokemon-logo {
-        height: 100px;
-    }
-}
-
-.interface {
+.favorites-interface {
     display: flex;
     justify-content: center;
 
@@ -92,7 +64,7 @@
     }
 }
 
-.main {
+.favorites-main {
     min-height: 800px;
 
     .pokemons {
@@ -100,7 +72,7 @@
         justify-content: center;
         margin-top: 50px;
 
-        &__block {
+        &-block {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
         }
@@ -108,11 +80,11 @@
 }
 
 @media (max-width: 1300px) {
-    .interface-block {
+    .favorites-interface-block {
         width: 1100px;
     }
 
-    .main {
+    .favorites-main {
         .pokemons {
             &__block {
                 grid-template-columns: repeat(6, 1fr);
@@ -122,11 +94,11 @@
 }
 
 @media (max-width: 1130px) {
-    .interface-block {
+    .favorites-interface-block {
         width: 700px;
     }
 
-    .main {
+    .favorites-main {
         .pokemons {
             &__block {
                 grid-template-columns: repeat(4, 1fr);
@@ -136,11 +108,11 @@
 }
 
 @media (max-width: 820px) {
-    .interface-block {
+    .favorites-interface-block {
         width: 490px;
     }
 
-    .main {
+    .favorites-main {
         .header {
             .pokemon-logo {
                 height: 150px;

@@ -47,3 +47,7 @@ export async function getChangeFavorites(pokemon: any) {
         pokemon
     })
 }
+
+export async function getAllPoks() {
+    return makeRequest('get', 'https://pokeapi.co/api/v2/pokemon?limit=100')
+}

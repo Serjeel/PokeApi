@@ -11,6 +11,17 @@
     margin-right: 10px;
   }
 
+  .header-button {
+    cursor: pointer;
+    height: 40px;
+    background-color: white;
+    border: 2px solid #565757;
+    border-radius: 7px;
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
   .auth-button {
     cursor: pointer;
     height: 40px;
@@ -21,6 +32,7 @@
     font-size: 14px;
     font-weight: 500;
   }
+
 }
 
 .header {
@@ -29,6 +41,7 @@
   margin-top: -70px;
 
   .pokemon-logo {
+    cursor: pointer;
     height: 100px;
   }
 }

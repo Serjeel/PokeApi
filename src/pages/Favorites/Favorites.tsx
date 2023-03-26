@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Cookies from 'js-cookie';
 import PokemonCard from "../../components/PokemonCard/PokemonCard";
 import './Favorites.scss';
 
@@ -12,30 +13,59 @@ const Favorites = () => {
   const [pageNumber, setPageNumber] = useState(Number(searchParams.get('page')) || 1);
   const [pageCount, setPageCount] = useState(1);
 
-  const allPokemons = useSelector((state: any) => state.allPokemons)
+  const allPokemons = useSelector((state: any) => state.allPokemons);
+  const favorites = useSelector((state: any) => state.favorites);
+  const [favoritesArray, setFavoritesArray]: any = useState([]);
   const [selectedPokemons, setSelectedPokemons]: any = useState([]);
 
   const [searchInputData, setSearchInputData] = useState('');
 
+  const arr: any = () => {
+    let array = [];
+    for (let i = 0; i < 9; i++) {
+      array.push({
+        name: "",
+        image: ""
+      })
+    }
+    return array;
+  }
+
   const contentAmountButtonClick = (value: number) => {
     setContentAmount(value);
     setPageNumber(1);
-    history(`/allPokemons/?page=1&amount=${value}`);
+    history(`/favorites/?page=1&amount=${value}`);
   }
 
   const pageNumberOnClick = (value: number) => {
     setPageNumber(value);
-    history(`/allPokemons/?page=${value}&amount=${contentAmount}`);
+    history(`/favorites/?page=${value}&amount=${contentAmount}`);
   }
 
   useEffect(() => {
+    if (!Cookies.get('token')) {
+      alert('Сначала нужно авторизоваться!');
+      history(`/allPokemons`);
+    } else {
+      let array: any = [];
+      allPokemons.map((pokemon: any) => {
+        favorites.map((favoritePokemon: any) => {
+          if (favoritePokemon === pokemon.name) {
+            array.push(pokemon);
+          }
+        })
+      })
+      setFavoritesArray(array)
+    }
+  }, [allPokemons])
+
+  useEffect(() => {
     if (searchInputData) {
-      console.log(searchInputData);
       let searchArray: any = [];
 
-      for (let i = 0; i < allPokemons.length; i++) {
-        if (allPokemons[i].name.includes(searchInputData)) {
-          searchArray.push(allPokemons[i]);
+      for (let i = 0; i < favoritesArray.length; i++) {
+        if (favoritesArray[i].name.includes(searchInputData)) {
+          searchArray.push(favoritesArray[i]);
         }
       }
 
@@ -46,56 +76,48 @@ const Favorites = () => {
       setSelectedPokemons(subArray);
       setPageCount(subArray.length);
       setPageNumber(1);
-      history(`/allPokemons/?page=1&amount=${contentAmount}`);
+      history(`/favorites/?page=1&amount=${contentAmount}`);
     } else {
       let subArray: any = [];
-      for (let i = 0; i < Math.ceil(allPokemons.length / contentAmount); i++) {
-        subArray[i] = allPokemons.slice((i * contentAmount), (i * contentAmount) + contentAmount);
+      for (let i = 0; i < Math.ceil(favoritesArray.length / contentAmount); i++) {
+        subArray[i] = favoritesArray.slice((i * contentAmount), (i * contentAmount) + contentAmount);
       }
       setSelectedPokemons(subArray);
       setPageCount(subArray.length);
     }
 
-  }, [allPokemons, contentAmount, searchInputData])
+  }, [favoritesArray, contentAmount, searchInputData])
 
   useEffect(() => {
     let subArray: any = [];
-    for (let i = 0; i < Math.ceil(allPokemons.length / contentAmount); i++) {
-      subArray[i] = allPokemons.slice((i * contentAmount), (i * contentAmount) + contentAmount);
+    for (let i = 0; i < Math.ceil(favoritesArray.length / contentAmount); i++) {
+      subArray[i] = favoritesArray.slice((i * contentAmount), (i * contentAmount) + contentAmount);
     }
 
-    console.log(subArray.length, pageNumber);
-
-    if (allPokemons.length) {
+    if (favoritesArray.length) {
 
       if (!searchParams.get('amount') || !searchParams.get('page') || subArray.length < pageNumber) {
-        console.log(1);
-        console.log(pageCount, pageNumber);
 
-        history('/allPokemons/?page=1&amount=10');
+        history('/favorites/?page=1&amount=10');
         setPageNumber(1);
         setContentAmount(10);
       } else if (Number(searchParams.get('amount')) === 10 || Number(searchParams.get('amount'))
         === 20 || Number(searchParams.get('amount')) === 50) {
-        console.log(contentAmount);
-
-        console.log(2);
 
         setPageNumber(Number(searchParams.get('page')));
         setContentAmount(Number(searchParams.get('amount')));
       } else {
-        console.log(3);
-        history('/allPokemons/?page=1&amount=10');
+        history('/favorites/?page=1&amount=10');
         setPageNumber(1);
         setContentAmount(10);
       }
     }
-  }, [allPokemons])
+  }, [favoritesArray])
 
   return (
     <>
-      <div className="interface">
-        <div className="interface-block">
+      <div className="favorites-interface">
+        <div className="favorites-interface-block">
           <div className="page-data">
             <div className="amount">
               <span>Amount: </span>
@@ -114,22 +136,35 @@ const Favorites = () => {
           <input className="search-input" type="text" placeholder="Search"
             value={searchInputData}
             onChange={(e: any) => {
-              setSearchInputData(e.target.value);
+              setTimeout(() => {
+                setSearchInputData(e.target.value);
+              }, 1000);
             }}
           />
         </div>
       </div>
-      <div className="main">
+      <div className="favorites-main">
         <div className='pokemons'>
-          <div className='pokemons__block'>
+          <div className='pokemons-block'>
             {
-              selectedPokemons.length !== 0 && selectedPokemons[pageNumber - 1].map((pokemon: any, index: number) =>
+              selectedPokemons.length !== 0 ? selectedPokemons[pageNumber - 1].map((pokemon: any, index: number) =>
                 <PokemonCard
                   name={pokemon.name}
                   image={pokemon.image}
                   key={index}
+                  isFavorite={favorites.includes(pokemon.name)}
                 />
-              )}
+              )
+                :
+                arr().map((pokemon: any, index: number) =>
+                  <PokemonCard
+                    name={pokemon.name}
+                    image={pokemon.image}
+                    key={index}
+                    isFavorite={favorites.includes(pokemon.name)}
+                  />
+                )
+            }
           </div>
         </div>
       </div>
