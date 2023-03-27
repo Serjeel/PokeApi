@@ -35,11 +35,16 @@ const PokemonCard = ({ name, image, isFavorite }: Props) => {
         if (res.status === "added") {
           favoritesArray.push(name);
           dispatch(setFavorites(favoritesArray));
-          setInfavorites(true);
+          console.log(favoritesArray);
+          
         } else {
-          favoritesArray.splice(favoritesArray.indexOf(name) - 1, 1);
+          console.log(name);
+          console.log(favoritesArray);
+          console.log(favoritesArray.indexOf(name));
+          
+          favoritesArray.splice(favoritesArray.indexOf(name), 1);
           dispatch(setFavorites(favoritesArray));
-          setInfavorites(false);
+          console.log(favoritesArray);
         }
       });
     } else {

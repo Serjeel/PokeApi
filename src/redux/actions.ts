@@ -32,6 +32,12 @@ export const getAllPokemons = () => async (dispatch: Dispatch<StorageEvent | any
     }).catch((e) => console.log(e))
 }
 
+export const setSelectedPokemons = (selectedPokemons: any) =>
+({
+    type: constants.SET_SELECTED_POKEMONS,
+    payload: selectedPokemons
+});
+
 export const setFavorites = (favorites: Array<string>) =>
 ({
     type: constants.SET_FAVORITES,
@@ -47,4 +53,20 @@ export const setIsAuthorized = (isAuthorized: boolean) =>
 export const setModalWindowAuthorizationShow = (modalWindowAuthorizationShow: boolean) => ({
     type: constants.SET_MODAL_WINDOW_AUTHORIZATION_SHOW,
     payload: modalWindowAuthorizationShow
+});
+
+export const setSearchInputData = (searchInputData: string) => ({
+    type: constants.SET_SEARCH_INPUT_DATA,
+    payload: searchInputData
+});
+
+
+export const setContentAmount = (contentAmount: number) => ({
+    type: constants.SET_CONTENT_AMOUNT,
+    payload: contentAmount
+});
+
+export const setPageNumber = (pageNumber: number) => ({
+    type: constants.SET_PAGE_NUMBER,
+    payload: pageNumber
 });

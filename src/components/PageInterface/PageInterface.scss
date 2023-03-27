@@ -1,0 +1,66 @@
+.allPokemons-interface {
+    display: flex;
+    justify-content: center;
+  
+    &-block {
+      display: flex;
+      justify-content: space-between;
+      width: 1250px;
+    }
+  
+    .page-data {
+      margin-top: 20px;
+      margin-left: 30px;
+  
+      .amount {
+        display: flex;
+        align-items: center;
+        height: 25px;
+        margin-bottom: 20px;
+  
+        &-button,
+        &-button-active {
+          cursor: pointer;
+          width: 28px;
+          height: 25px;
+          margin-left: 5px;
+          font-size: 14px;
+          border: 2px solid #565757;
+          border-radius: 5px;
+          background-color: white;
+  
+          &-active {
+            background-color: #FE5858;
+          }
+        }
+      }
+  
+      .pages {
+        display: flex;
+        flex-wrap: wrap;
+
+        &-button,
+        &-button-active {
+          cursor: pointer;
+          width: 28px;
+          height: 25px;
+          margin-left: 5px;
+          font-size: 14px;
+          border: 2px solid #565757;
+          border-radius: 5px;
+          background-color: white;
+  
+          &-active {
+            background-color: #FE5858;
+          }
+        }
+      }
+    }
+  
+    .search-input {
+      width: 150px;
+      height: 25px;
+      border-radius: 5px;
+      margin-right: 30px;
+    }
+  }

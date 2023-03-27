@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { setModalWindowAuthorizationShow } from '../../redux/actions';
+import { setModalWindowAuthorizationShow, setSearchInputData } from '../../redux/actions';
 import PokemonLogo from '../../images/PokemonLogo.png'
 import './Header.scss';
 
@@ -16,11 +16,13 @@ function Header() {
     const pokemonLogoClick = () => {
         if (searchParams.pathname !== '/allPokemons/') {
             history(`/allPokemons/?page=1&amount=10`);
+            dispatch(setSearchInputData(''));
         }
     }
 
     const favoritesButtonClick = () => {
         history(`/favorites/?page=1&amount=10`);
+        dispatch(setSearchInputData(''));
     }
 
     const loginButtonClick = () => {
@@ -38,7 +40,7 @@ function Header() {
                 {isAuthorized && (<>
                     <p className="username">{username}</p>
                     {searchParams.pathname !== '/favorites/' && <button className="header-button"
-                    onClick={favoritesButtonClick}>Favorites</button>}
+                        onClick={favoritesButtonClick}>Favorites</button>}
                     <button className="header-button" onClick={() => exitButtonClick()}
                     >Выход</button>
                 </>)}
