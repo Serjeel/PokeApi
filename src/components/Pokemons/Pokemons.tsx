@@ -40,7 +40,7 @@ const Pokemons = ({ target }: Props) => {
             if (!Cookies.get('token')) {
                 alert('Сначала нужно авторизоваться!');
                 history(`/allPokemons/?page=1&amount=10`);
-                console.log("туть");
+
             } else {
                 let array: any = [];
                 allPokemons.map((pokemon: any) => {
@@ -83,7 +83,6 @@ const Pokemons = ({ target }: Props) => {
                 dispatch(setSelectedPokemons(subArray));
                 dispatch(setPageNumber(1));
                 history(`/${target}/?page=1&amount=${contentAmount}`);
-                console.log("туть");
             }, 500);
         } else {
             let subArray: any = [];
@@ -119,11 +118,7 @@ const Pokemons = ({ target }: Props) => {
 
         if (!searchParams.get('amount') || !searchParams.get('page') ||
             (subArray.length < pageNumber && subArray.length !== 0)) {
-            console.log(!searchParams.get('amount'), !searchParams.get('page'), subArray.length);
-
             history(`/${target}/?page=1&amount=10`);
-            console.log("туть");
-
             dispatch(setPageNumber(1));
             dispatch(setContentAmount(10));
         } else if (Number(searchParams.get('amount')) === 10 || Number(searchParams.get('amount'))
@@ -133,7 +128,6 @@ const Pokemons = ({ target }: Props) => {
             dispatch(setContentAmount(Number(searchParams.get('amount'))));
         } else {
             history(`/${target}/?page=1&amount=10`);
-            console.log("туть");
             dispatch(setPageNumber(1));
             dispatch(setContentAmount(10));
         }
