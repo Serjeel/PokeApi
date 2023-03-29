@@ -1,7 +1,6 @@
 import constants from './constans';
 import axios from "axios";
 import { Dispatch } from 'react';
-//require('dotenv').config()
 
 export const setAllPokemons = (allPokemons: Array<object>) => ({
     type: constants.SET_ALL_POKEMONS,

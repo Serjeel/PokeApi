@@ -1,4 +1,3 @@
-
 import PageInterface from "../../components/PageInterface/PageInterface";
 import Pokemons from "../../components/Pokemons/Pokemons";
 

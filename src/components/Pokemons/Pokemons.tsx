@@ -13,7 +13,7 @@ interface Props {
 const Pokemons = ({ target }: Props) => {
     let history = useNavigate();
     const dispatch: any = useDispatch();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const contentAmount = useSelector((state: any) => state.contentAmount);
     const pageNumber = useSelector((state: any) => state.pageNumber);
@@ -23,11 +23,10 @@ const Pokemons = ({ target }: Props) => {
     const [favoritesArray, setFavoritesArray]: any = useState([]);
     const selectedPokemons = useSelector((state: any) => state.selectedPokemons);
     const searchInputData = useSelector((state: any) => state.searchInputData);
-    const [notFoundText, setNotFoundText] = useState("");
 
     const arr: any = () => {
         let array = [];
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i <= 9; i++) {
             array.push({
                 name: "",
                 image: ""
@@ -41,6 +40,7 @@ const Pokemons = ({ target }: Props) => {
             if (!Cookies.get('token')) {
                 alert('Сначала нужно авторизоваться!');
                 history(`/allPokemons/?page=1&amount=10`);
+                console.log("туть");
             } else {
                 let array: any = [];
                 allPokemons.map((pokemon: any) => {
@@ -57,31 +57,34 @@ const Pokemons = ({ target }: Props) => {
 
     useEffect(() => {
         if (searchInputData) {
-            let searchArray: any = [];
+            setTimeout(() => {
+                let searchArray: any = [];
 
-            if (target === "allPokemons") {
-                for (let i = 0; i < allPokemons.length; i++) {
-                    if (allPokemons[i].name.includes(searchInputData)) {
-                        searchArray.push(allPokemons[i]);
+                if (target === "allPokemons") {
+                    for (let i = 0; i < allPokemons.length; i++) {
+                        if (allPokemons[i].name.includes(searchInputData)) {
+                            searchArray.push(allPokemons[i]);
+                        }
                     }
                 }
-            }
 
-            if (target === "favorites") {
-                for (let i = 0; i < favoritesArray.length; i++) {
-                    if (favoritesArray[i].name.includes(searchInputData)) {
-                        searchArray.push(favoritesArray[i]);
+                if (target === "favorites") {
+                    for (let i = 0; i < favoritesArray.length; i++) {
+                        if (favoritesArray[i].name.includes(searchInputData)) {
+                            searchArray.push(favoritesArray[i]);
+                        }
                     }
                 }
-            }
 
-            let subArray: any = [];
-            for (let i = 0; i < Math.ceil(searchArray.length / contentAmount); i++) {
-                subArray[i] = searchArray.slice((i * contentAmount), (i * contentAmount) + contentAmount);
-            }
-            dispatch(setSelectedPokemons(subArray));
-            dispatch(setPageNumber(1));
-            history(`/${target}/?page=1&amount=${contentAmount}`);
+                let subArray: any = [];
+                for (let i = 0; i < Math.ceil(searchArray.length / contentAmount); i++) {
+                    subArray[i] = searchArray.slice((i * contentAmount), (i * contentAmount) + contentAmount);
+                }
+                dispatch(setSelectedPokemons(subArray));
+                dispatch(setPageNumber(1));
+                history(`/${target}/?page=1&amount=${contentAmount}`);
+                console.log("туть");
+            }, 500);
         } else {
             let subArray: any = [];
             if (target === "allPokemons") {
@@ -96,14 +99,11 @@ const Pokemons = ({ target }: Props) => {
                 }
             }
             dispatch(setSelectedPokemons(subArray));
-            console.log(subArray);
         }
 
     }, [allPokemons, favoritesArray, contentAmount, searchInputData])
 
     useEffect(() => {
-        console.log(1);
-
         let subArray: any = [];
         if (target === "allPokemons") {
             for (let i = 0; i < Math.ceil(allPokemons.length / contentAmount); i++) {
@@ -117,8 +117,13 @@ const Pokemons = ({ target }: Props) => {
             }
         }
 
-        if (!searchParams.get('amount') || !searchParams.get('page') || subArray.length < pageNumber) {
+        if (!searchParams.get('amount') || !searchParams.get('page') ||
+            (subArray.length < pageNumber && subArray.length !== 0)) {
+            console.log(!searchParams.get('amount'), !searchParams.get('page'), subArray.length);
+
             history(`/${target}/?page=1&amount=10`);
+            console.log("туть");
+
             dispatch(setPageNumber(1));
             dispatch(setContentAmount(10));
         } else if (Number(searchParams.get('amount')) === 10 || Number(searchParams.get('amount'))
@@ -128,6 +133,7 @@ const Pokemons = ({ target }: Props) => {
             dispatch(setContentAmount(Number(searchParams.get('amount'))));
         } else {
             history(`/${target}/?page=1&amount=10`);
+            console.log("туть");
             dispatch(setPageNumber(1));
             dispatch(setContentAmount(10));
         }

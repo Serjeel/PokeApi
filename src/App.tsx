@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import Cookies from 'js-cookie';
 
@@ -15,14 +15,10 @@ import Favorites from "./pages/Favorites/Favorites";
 import './App.scss';
 
 const App = () => {
-  let history = useNavigate();
-  //require('dotenv').config()
-
   const dispatch: any = useDispatch();
 
   const Authorization = async () => {
     const auth: any = await getAuthorization();
-    console.log(auth);
 
     if (auth.success) {
       dispatch(setIsAuthorized(auth.success));

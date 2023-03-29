@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setSearchInputData } from "../../redux/actions";
 import { setPageNumber, setContentAmount } from "../../redux/actions";
 import './PageInterface.scss';
@@ -12,14 +11,10 @@ interface Props {
 const PageInterface = ({ target }: Props) => {
   let history = useNavigate();
   const dispatch: any = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const allPokemons = useSelector((state: any) => state.allPokemons);
   const contentAmount = useSelector((state: any) => state.contentAmount);
   const pageNumber = useSelector((state: any) => state.pageNumber);
-
   const selectedPokemons = useSelector((state: any) => state.selectedPokemons);
-
   const searchInputData = useSelector((state: any) => state.searchInputData);
 
   const contentAmountButtonClick = (value: number) => {
@@ -32,7 +27,6 @@ const PageInterface = ({ target }: Props) => {
     dispatch(setPageNumber(value));
     history(`/${target}/?page=${value}&amount=${contentAmount}`);
   }
-
 
   const inputDataChange = (e: any) => {
     dispatch(setSearchInputData(e.target.value));

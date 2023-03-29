@@ -1,17 +1,12 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import './SelectedPokemon.scss';
 
 const SelectedPokemon = () => {
     const allPokemons = useSelector((state: any) => state.allPokemons);
-
-    const history = useLocation();
     const searchParams = useParams();
     const pokemonName = searchParams.pokemon;
-    console.log(pokemonName);
-
-
     const pokemonInform = allPokemons.find((item: any) => item.name === pokemonName);
 
     return (

@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { getAuthentification, getRegistration } from '../../api';
 import CloseIcon from '../../images/close-icon.svg';
 import { setModalWindowAuthorizationShow } from '../../redux/actions';
-
 import './ModalAuthWindow.scss';
 
 function ModalAuthWindow() {
     const dispatch: any = useDispatch();
-    // const [username, setUsername] = useState("peter");
     const modalWindowAuthorizationShow = useSelector((state: any) => state.modalWindowAuthorizationShow);
     const [selectedAuthorizationTab, setSelectedAuthorizationTab] = useState("login");
 
@@ -114,7 +112,7 @@ function ModalAuthWindow() {
                 <div className="modal-authorization-content">
                     <div className="modal-header-block">
                         <h3 className="modal-authorization-header">PokeApi</h3>
-                        <img className="close-icon" src={CloseIcon} onClick={() => closeIconClick()} />
+                        <img className="close-icon" alt="close-icon" src={CloseIcon} onClick={() => closeIconClick()} />
                     </div>
                     <div className="modal-tabs-authorization-block">
                         <div className="modal-authorization-tabs ">

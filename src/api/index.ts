@@ -19,8 +19,6 @@ async function makeRequest(requestType: Methods, requestUrl: any, requestData?: 
         }).then((res: any) => { data = res.data }).catch((err: any) => { });
     }
 
-    console.log(data);
-
     return data;
 }
 

@@ -42,10 +42,10 @@ function Header() {
                     {searchParams.pathname !== '/favorites/' && <button className="header-button"
                         onClick={favoritesButtonClick}>Favorites</button>}
                     <button className="header-button" onClick={() => exitButtonClick()}
-                    >Выход</button>
+                    >Logout</button>
                 </>)}
                 {(!isAuthorized && <button className="auth-button" onClick={() =>
-                    loginButtonClick()}>Войти/Зарегистироватья</button>)}
+                    loginButtonClick()}>Login/Register</button>)}
             </div>
             <div className='header'>
                 <img

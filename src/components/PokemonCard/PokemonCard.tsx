@@ -1,14 +1,14 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from 'js-cookie';
+import ContentLoader from "react-content-loader";
 import { setFavorites } from "../../redux/actions";
 import { getChangeFavorites } from '../../api/index';
 import Favorites from '../../images/favorites.svg';
 import FavoritesActive from '../../images/favorites-active.svg';
 
 import './PokemonCard.scss'
-import { useEffect, useState } from "react";
-import ContentLoader from "react-content-loader";
 
 interface Props {
   name: string
@@ -35,16 +35,9 @@ const PokemonCard = ({ name, image, isFavorite }: Props) => {
         if (res.status === "added") {
           favoritesArray.push(name);
           dispatch(setFavorites(favoritesArray));
-          console.log(favoritesArray);
-          
         } else {
-          console.log(name);
-          console.log(favoritesArray);
-          console.log(favoritesArray.indexOf(name));
-          
           favoritesArray.splice(favoritesArray.indexOf(name), 1);
           dispatch(setFavorites(favoritesArray));
-          console.log(favoritesArray);
         }
       });
     } else {
